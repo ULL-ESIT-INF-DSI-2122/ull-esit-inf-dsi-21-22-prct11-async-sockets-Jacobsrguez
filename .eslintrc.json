@@ -18,6 +18,6 @@
         "require-jsdoc": "off",
         "valid-jsdoc": "off",
         "max-len": "off",
-        "single-quotes": "off"
+        "quotes": "off"
     }
 }

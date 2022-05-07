@@ -1,20 +1,22 @@
 import {EventEmitter} from 'events';
+import * as chalk from 'chalk';
+import {Note} from './nota';
+import {MessageEventEmitterServer} from './eventEmitterServer';
+import * as net from 'net';
+import {Method} from './method';
 
-export class MessageEventEmitterClient extends EventEmitter {
-  constructor(connection: EventEmitter) {
-    super();
-
-    let wholeData = '';
-    connection.on('data', (dataChunk) => {
-      wholeData += dataChunk;
-
-      let messageLimit = wholeData.indexOf('\n');
-      while (messageLimit !== -1) {
-        const message = wholeData.substring(0, messageLimit);
-        wholeData = wholeData.substring(messageLimit + 1);
-        this.emit('message', JSON.parse(message));
-        messageLimit = wholeData.indexOf('\n');
-      }
-    });
-  }
-}
+net.createServer((connection) => {
+  const server = new MessageEventEmitterServer(connection);
+  server.on('message', (message) => {
+    switch (message.action) {
+      case 'add':
+        connection.write(JSON.stringify({
+          action: 'add',
+        }));
+        break;
+      default:
+        console.log(chalk.red('Accion no reconocida'));
+        break;
+    }
+  });
+}).listen(60300);
