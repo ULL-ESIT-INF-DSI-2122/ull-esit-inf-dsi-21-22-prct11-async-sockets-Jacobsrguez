@@ -1,5 +1,5 @@
 import {connect} from 'net';
-import {MessageEventEmitterClient} from 'eventEmitterClient';
+import {MessageEventEmitterClient} from 'events';
 
 const client = new MessageEventEmitterClient(connect({port: 60300}));
 
