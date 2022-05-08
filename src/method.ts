@@ -15,7 +15,7 @@ export class Method {
     }
     if (!fs.existsSync(`./${owner}/${nota.getTitle()}.json`)) {
       fs.writeFileSync(`./${owner}/${nota.getTitle()}.json`, JSON.stringify(nota));
-      callback(chalk.green(`La Nota ${nota.getTitle()} ha sido creada con exito`), undefined);
+      callback(undefined, chalk.green(`La Nota ${nota.getTitle()} ha sido creada con exito`));
     } else {
       callback(chalk.red(`La Nota ${nota.getTitle()} ya existe`), undefined);
     }
@@ -31,7 +31,7 @@ export class Method {
     if (fs.existsSync(`./${owner}/${title}.json`)) {
       const nota = new Note(title, body, color);
       fs.writeFileSync(`./${owner}/${title}.json`, JSON.stringify(nota));
-      callback(chalk.green(`La Nota ${title} ha sido modificada con exito`), undefined);
+      callback(undefined, chalk.green(`La Nota ${title} ha sido modificada con exito`));
     } else {
       callback(chalk.red(`La Nota ${title} no existe`), undefined);
     }
@@ -45,7 +45,7 @@ export class Method {
   public remove(owner: string, title: string, callback: (err: string | undefined, data: string | undefined) => void): void {
     if (fs.existsSync(`./${owner}/${title}.json`)) {
       fs.rmSync(`./${owner}/${title}.json`);
-      callback(chalk.green(`La Nota ${title} ha sido eliminada con exito`), undefined);
+      callback(undefined, chalk.green(`La Nota ${title} ha sido eliminada con exito`));
     } else {
       callback(chalk.red(`La Nota ${title} no existe`), undefined);
     }
@@ -55,13 +55,15 @@ export class Method {
    * Metodo list que lista todas las notas
    * @param owner usuario de las notas
    */
-  public list(owner: string, callback: (err: string | undefined, data: string | undefined) => void): void {
+  public list(owner: string, callback: (err: string | undefined, data: Note[] | undefined) => void): void {
     if (fs.existsSync(`./${owner}`)) {
       const files = fs.readdirSync(`./${owner}`);
+      const notaArray: Note[] = [];
       files.forEach((file) => {
         const nota = JSON.parse(fs.readFileSync(`./${owner}/${file}`, 'utf8'));
-        callback(nota['title'], undefined);
+        notaArray.push(nota);
       });
+      callback(undefined, notaArray);
     } else {
       callback(chalk.red(`El usuario ${owner} no existe`), undefined);
     }
@@ -72,12 +74,12 @@ export class Method {
    * @param owner Usuaio dueño de la nota
    * @param title Titulo de la nota a leer
    */
-  public read(owner: string, title: string): void {
+  public read(owner: string, title: string, callback: (err: string | undefined, data: Note[] | undefined) => void): void {
     if (fs.existsSync(`./${owner}/${title}.json`)) {
       const nota = JSON.parse(fs.readFileSync(`./${owner}/${title}.json`, 'utf8'));
-      console.log(nota);
+      callback(undefined, nota);
     } else {
-      console.log(chalk.red(`La Nota ${title} no existe`));
+      callback(chalk.red(`La Nota ${title} no existe`), undefined);
     }
   }
 }

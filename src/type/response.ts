@@ -1,6 +1,6 @@
 import {Note} from '../nota';
 export type ResponseType = {
   type: 'add' | 'update' | 'remove' | 'read' | 'list';
-  success: boolean;
+  success: Boolean;
   notes?: Note[];
 }
