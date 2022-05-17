@@ -34,7 +34,7 @@ yargs.command({
       if (argv.color === 'red' || argv.color === 'green' ||
       argv.color === 'yellow' || argv.color === 'blue') {
         const nota = new Note(argv.title, argv.body, argv.color);
-        console.log(new Method().add(nota, argv.user, argv.color));
+        console.log(new Method().add(nota, argv.user));
       } else {
         console.log(chalk.red('El color debe ser red, green, yellow o blue'));
       }
@@ -75,7 +75,7 @@ yargs.command({
     typeof argv.body === 'string' && typeof argv.color === 'string') {
       if (argv.color === 'red' || argv.color === 'green' ||
       argv.color === 'yellow' || argv.color === 'blue') {
-        console.log(new Method().edit(argv.user, argv.title, argv.body, argv.color, argv.color));
+        console.log(new Method().edit(argv.user, argv.title, argv.body, argv.color));
       } else {
         console.log(chalk.red('El color debe ser red, green, yellow o blue'));
       }
@@ -103,7 +103,7 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string'&& typeof argv.title === 'string') {
-      console.log(new Method().remove(argv.user, argv.title, argv.title));
+      console.log(new Method().remove(argv.user, argv.title));
     }
   },
 });
@@ -123,7 +123,7 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string') {
-      console.log(new Method().list(argv.user, argv.user));
+      console.log(new Method().list(argv.user));
     }
   },
 });
@@ -148,7 +148,7 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string' && typeof argv.title === 'string') {
-      console.log(new Method().read(argv.user, argv.title, argv.title));
+      console.log(new Method().read(argv.user, argv.title));
     }
   },
 });
