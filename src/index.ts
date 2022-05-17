@@ -3,9 +3,6 @@ import * as chalk from 'chalk';
 import {Note} from './nota';
 import {Method} from './method';
 
-/**
- * Comando add que añade una nota
- */
 yargs.command({
   command: 'add',
   describe: 'Añadir una nueva nota',
@@ -37,7 +34,7 @@ yargs.command({
       if (argv.color === 'red' || argv.color === 'green' ||
       argv.color === 'yellow' || argv.color === 'blue') {
         const nota = new Note(argv.title, argv.body, argv.color);
-        console.log(new Method().add(nota, argv.user));
+        console.log(new Method().add(nota, argv.user, argv.color));
       } else {
         console.log(chalk.red('El color debe ser red, green, yellow o blue'));
       }
@@ -78,8 +75,7 @@ yargs.command({
     typeof argv.body === 'string' && typeof argv.color === 'string') {
       if (argv.color === 'red' || argv.color === 'green' ||
       argv.color === 'yellow' || argv.color === 'blue') {
-        // eslint-disable-next-line max-len
-        console.log(new Method().edit(argv.user, argv.title, argv.body, argv.color));
+        console.log(new Method().edit(argv.user, argv.title, argv.body, argv.color, argv.color));
       } else {
         console.log(chalk.red('El color debe ser red, green, yellow o blue'));
       }
@@ -107,7 +103,7 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string'&& typeof argv.title === 'string') {
-      console.log(new Method().remove(argv.user, argv.title));
+      console.log(new Method().remove(argv.user, argv.title, argv.title));
     }
   },
 });
@@ -127,7 +123,7 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string') {
-      console.log(new Method().list(argv.user));
+      console.log(new Method().list(argv.user, argv.user));
     }
   },
 });
@@ -152,7 +148,7 @@ yargs.command({
   },
   handler(argv) {
     if (typeof argv.user === 'string' && typeof argv.title === 'string') {
-      console.log(new Method().read(argv.user, argv.title));
+      console.log(new Method().read(argv.user, argv.title, argv.title));
     }
   },
 });
