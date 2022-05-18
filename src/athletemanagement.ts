@@ -115,7 +115,7 @@ export class Manager {
 const manager = new Manager();
 
 // Add
-/*
+
 const out: AthleteAuxInterface = {
   nombre: "paco",
   apellido: "perez",
@@ -131,7 +131,7 @@ manager.addAthlete(out).then((result) => {
 }).catch((error) => {
   console.log(error);
 });
-*/
+
 // Search
 /*
 manager.searchAthlete("paco").then((result) => {
